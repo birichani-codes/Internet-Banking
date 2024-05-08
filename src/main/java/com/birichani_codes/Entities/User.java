@@ -36,9 +36,9 @@ public class User {
     @Column(name = "id_number", nullable = false, unique = true)
     private String idNumber;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "branch_name")
-    private String branchName;
-
+    private Branch branchName;
     @Column(name = "phone", nullable = false)
     private String phone;
 
@@ -55,8 +55,8 @@ public class User {
     @Column(name = "address")
     private String address;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<Account> accounts;
-
+}
+enum Branch {
+    MALINDI, UKUNDA,MIGORI,MWEA,UTAWALA,THIKA,GATEWAY
 }
 
