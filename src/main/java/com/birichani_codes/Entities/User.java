@@ -56,7 +56,4 @@ public class User {
     private String address;
 
 }
-enum Branch {
-    MALINDI, UKUNDA,MIGORI,MWEA,UTAWALA,THIKA,GATEWAY
-}
 

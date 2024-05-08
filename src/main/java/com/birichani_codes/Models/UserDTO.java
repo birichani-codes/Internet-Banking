@@ -1,5 +1,6 @@
 package com.birichani_codes.Models;
 
+import com.birichani_codes.Entities.Branch;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -26,7 +27,7 @@ public class UserDTO {
     @NotBlank(message = "ID number is required")
     private String idNumber;
 
-    private String branchName;
+    private Branch branch;
 
     @NotBlank(message = "Phone number is required")
     @Pattern(regexp="(^$|[0-9]{10})", message = "Phone number must be 10 digits")
