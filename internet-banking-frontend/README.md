@@ -12,3 +12,4 @@
 ## ToDo's
 - More Frontend Implementations
 - Hosting
+- The components implementations are just basic not to detail 
