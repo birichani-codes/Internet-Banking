@@ -1,9 +1,19 @@
 package com.birichani_codes.Entities;
 
+import com.birichani_codes.Entities.Security.Authority;
+import com.birichani_codes.Entities.Security.UserRole;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+
+import static org.aspectj.weaver.tools.cache.SimpleCacheFactory.enabled;
 
 /**
  * Project_name: Internet-Banking
@@ -22,10 +32,13 @@ import java.util.Date;
 @EqualsAndHashCode
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "username", nullable = false)
+    private String username;
 
     @Column(name = "account_name", nullable = false)
     private String accountName;
@@ -55,5 +68,52 @@ public class User {
     @Column(name = "address")
     private String address;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonIgnore
+    private Set<UserRole> userRoles = new HashSet<>();
+
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        Set<GrantedAuthority> authorites = new HashSet<>();
+        userRoles.forEach(ur -> authorites.add(new Authority(ur.getRole().getName())));
+
+        return authorites;
+    }
+
+    @Override
+    public String getPassword() {
+        return null;
+    }
+
+    @Override
+    public String getUsername() {
+        return null;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        // TODO Auto-generated method stub
+        return true;
+    }
+    @Override
+    public boolean isAccountNonLocked() {
+        // TODO Auto-generated method stub
+        return true;
+    }
+    @Override
+    public boolean isCredentialsNonExpired() {
+        // TODO Auto-generated method stub
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public Collection<UserRole> getUserRoles() {
+        return null;
+    }
 }
 
